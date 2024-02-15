@@ -42,17 +42,6 @@ Enter the wagtail admin and create a new HomePage page. Check the owner field. O
 
 .. code-block:: bash
 
-Python 3.12.2 (tags/v3.12.2:6abddd9, Feb  6 2024, 21:26:36) [MSC v.1937 64 bit (AMD64)] on win32
-Type "help", "copyright", "credits" or "license" for more information.
-(InteractiveConsole)
->>> from home.models import HomePage
->>> HomePage.objects.first().owner is None
-True
-
-Expected behaviour
-==================
-
-HomePage.owner to be set to the user logged into the admin who created the page.
     Python 3.12.2 (tags/v3.12.2:6abddd9, Feb  6 2024, 21:26:36) [MSC v.1937 64 bit (AMD64)] on win32
     Type "help", "copyright", "credits" or "license" for more information.
     (InteractiveConsole)
