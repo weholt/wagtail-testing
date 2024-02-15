@@ -7,10 +7,12 @@ Wagtail Testing
 - Wagtail version 6.0.1
 - OS Windows 10
 
-Clone project:
+Clone main repository:
+
 .. code-block:: bash
 
     $ git clone https://github.com/weholt/wagtail-testing.git
+
 
 Problems
 ========
@@ -19,6 +21,7 @@ Problems
 -------------------------------------
 
 First checkout the testing branch:
+
 .. code-block:: bash
 
     $ git checkout pages_without_owner
