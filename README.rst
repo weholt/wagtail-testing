@@ -64,6 +64,7 @@ HomePage.owner to be set to the user logged into the admin who created the page.
 ----------------------------------------------------------------------
 
 First checkout the testing branch:
+
 .. code-block:: bash
 
     $ git checkout limit_choices_to_not_working
