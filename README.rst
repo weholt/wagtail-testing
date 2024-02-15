@@ -41,5 +41,91 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> HomePage.objects.first().owner is None
 True
 
+Expected behaviour
+==================
+
+HomePage.owner to be set to the user logged into the admin who created the page.
+
 .. image:: images/Image_1.png
+   :width: 600
+
+2. Limit queryset for foreign keys using limit_choices_to not working.
+
+First checkout the testing branch:
+```
+$ git checkout limit_choices_to_not_working
+```
+
+Modify the models.py file to look like this:
+
+```
+from django.db import models
+from modelcluster.fields import ParentalKey
+from wagtail.snippets.models import register_snippet
+from wagtail.admin.panels import (
+    InlinePanel,
+    MultiFieldPanel,
+)
+
+from wagtail.models import Orderable
+from wagtail.models import Page
+
+
+class HomePage(Page):
+
+    content_panels = Page.content_panels + [
+        MultiFieldPanel(
+            [
+                InlinePanel("non_page2_list", label="Non-page 2"),
+            ],
+            heading="Other non-page models",
+            classname="collapsed",
+        ),
+    ]
+
+
+@register_snippet
+class NonPage1(Orderable):
+
+    text = models.CharField(max_length=50)
+    selected = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return "%s (selected: %s)" % (self.text, self.selected)
+
+
+def query_limiter():
+    return {"selected": True}
+
+
+@register_snippet
+class NonPage2(Orderable):
+
+    page = ParentalKey(
+        HomePage,
+        on_delete=models.CASCADE,
+        related_name="non_page2_list",
+        null=True,
+    )
+    name = models.CharField(max_length=50)
+    non_page1 = models.ForeignKey(
+        NonPage1,
+        on_delete=models.SET_NULL,
+        limit_choices_to=query_limiter,
+        null=True,
+        blank=True,
+    )
+
+    def __str__(self) -> str:
+        return "%s - %s" % (self.name, self.non_page1)
+```
+
+Log into the admin, add a couple of NonPage1 snippets, of which only a few is selected. Under the "Other non-page models"-panel of the HomePage, try to add a "non-page 2" instance, and choose a "Non page 1" instance. 
+
+Expected behaviour
+==================
+
+The "Non page 1" list should be filtered and only show records with the select property set to True.
+
+.. image:: images/Image_2.png
    :width: 600
