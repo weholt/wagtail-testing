@@ -15,7 +15,7 @@ Problems
 
 First checkout the testing branch:
 ```
-$ git checkout page_without_owner
+$ git checkout pages_without_owner
 ```
 
 To re-create use the basic model from the official wagtail tutorial and add the owner field to the content panels:
