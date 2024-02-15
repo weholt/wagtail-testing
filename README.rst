@@ -144,6 +144,11 @@ The "Non page 1" list should be filtered and only show records with the select p
 .. image:: images/Image_2.png
    :width: 600
 
+This works as expected in the django admin:
+
+.. image:: images/Image_3.png
+   :width: 600
+
 
 Installed packages / pip freeze
 -------------------------------
